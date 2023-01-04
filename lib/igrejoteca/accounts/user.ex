@@ -4,7 +4,6 @@ defmodule Igrejoteca.Accounts.User do
 
 
   alias Igrejoteca.Utils.Hashing
-  alias Igrejoteca.PrayerRequest.Prayer
   Igrejoteca.PrayerRequest.Testimonials.Testimony
 
   @email_regex ~r/^[a-z0-9._+-]+@[a-z0-9.-]+\.[a-z]{2,63}$/
@@ -24,8 +23,6 @@ defmodule Igrejoteca.Accounts.User do
     field :name, :string
     field :password, :string, virtual: true
     field :password_hash, :string
-    has_many :prayer, Prayer
-    has_many :testimonials, Testimony
 
     timestamps()
   end
