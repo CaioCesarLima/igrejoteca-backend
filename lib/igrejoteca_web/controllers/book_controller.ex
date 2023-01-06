@@ -5,7 +5,12 @@ defmodule IgrejotecaWeb.BookController do
   alias Igrejoteca.Books.Book
   alias Igrejoteca.Utils.BooksApi
   alias IgrejotecaWeb.Utils.Response
+  alias Igrejoteca.Books.Reserve.Repository, as: ReserveRepository
+  alias Igrejoteca.Accounts.Repository, as: UserRepository
+  alias IgrejotecaWeb.ReserveView
+
   action_fallback IgrejotecaWeb.FallbackController
+
 
   def index(conn, _params) do
     books = BookRepository.list_books()
@@ -57,5 +62,54 @@ defmodule IgrejotecaWeb.BookController do
     with {:ok, %Book{}} <- BookRepository.delete_book(book) do
       send_resp(conn, :no_content, "")
     end
+  end
+
+  def create_reserve(%{assigns: %{current_user: current_user}} = conn, %{"book_id" => book_id}) do
+    case ReserveRepository.add_reserve_to_book(book_id, current_user) do
+      {:ok, _struct} -> Response.ok(conn)
+      _ -> Response.bad_request(conn)
+    end
+  end
+
+  def remove_reserve(conn, %{"reserve_id" => reserve_id}) do
+    case ReserveRepository.remove_book_to_reserve(reserve_id) do
+      {:ok, _struct} -> Response.ok(conn)
+      _ -> Response.bad_request(conn)
+    end
+  end
+
+  def list_reserves(conn, _params) do
+    reserves = ReserveRepository.list_all()
+    IO.inspect(reserves, label: "reserva original")
+    reserves = reserves
+    |> Enum.map(fn reserve -> book = BookRepository.get_book!(reserve.book_id)
+     Map.put(reserve, :book, book) end)
+    |> Enum.map(fn reserve -> user = UserRepository.get_user!(reserve.user_id)
+    Map.put(reserve, :user, user) end)
+
+    Enum.each(reserves, fn reserve -> IO.inspect(reserve.book.title) end)
+
+    conn
+      |> put_status(:ok)
+      |> put_view(ReserveView)
+      |> render("index.json", reserves: reserves)
+
+  end
+
+  def user_reserves(%{assigns: %{current_user: current_user}} = conn, _params) do
+    reserves = ReserveRepository.reserves_by_user(current_user)
+    IO.inspect(reserves, label: "reserva original")
+    reserves = reserves
+    |> Enum.map(fn reserve -> book = BookRepository.get_book!(reserve.book_id)
+     Map.put(reserve, :book, book) end)
+    |> Enum.map(fn reserve -> user = UserRepository.get_user!(reserve.user_id)
+    Map.put(reserve, :user, user) end)
+
+    Enum.each(reserves, fn reserve -> IO.inspect(reserve.book.title) end)
+
+    conn
+      |> put_status(:ok)
+      |> put_view(ReserveView)
+      |> render("index.json", reserves: reserves)
   end
 end
