@@ -24,10 +24,15 @@ defmodule IgrejotecaWeb.Router do
     resources "/books", BookController, except: [:new, :edit]
     post "/isbn-book", BookController, :isbn_book
     get "/search-books", BookController, :search_books
+
     post "/reserves", BookController, :create_reserve
     delete "/reserves", BookController, :remove_reserve
     get "/reserves", BookController, :list_reserves
     get "/reserve-user", BookController, :user_reserves
+
+    post "/loans", BookController, :create_loan
+    get "/loans", BookController, :list_loans
+    # get "/loan-user", BookController, :user_reserves
 
     resources "/desires", DesireController, except: [:new, :edit]
   end

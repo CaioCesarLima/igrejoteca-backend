@@ -8,6 +8,8 @@ defmodule IgrejotecaWeb.BookController do
   alias Igrejoteca.Books.Reserve.Repository, as: ReserveRepository
   alias Igrejoteca.Accounts.Repository, as: UserRepository
   alias IgrejotecaWeb.ReserveView
+  alias Igrejoteca.Books.Loan.Repository, as: LoanRepository
+  alias IgrejotecaWeb.LoanView
 
   action_fallback IgrejotecaWeb.FallbackController
 
@@ -65,8 +67,11 @@ defmodule IgrejotecaWeb.BookController do
   end
 
   def create_reserve(%{assigns: %{current_user: current_user}} = conn, %{"book_id" => book_id}) do
+    book = BookRepository.get_book!(book_id)
     case ReserveRepository.add_reserve_to_book(book_id, current_user) do
-      {:ok, _struct} -> Response.ok(conn)
+      {:ok, _struct} ->
+        BookRepository.update_book(book, %{:status=> :reserved})
+        Response.ok(conn)
       _ -> Response.bad_request(conn)
     end
   end
@@ -111,5 +116,48 @@ defmodule IgrejotecaWeb.BookController do
       |> put_status(:ok)
       |> put_view(ReserveView)
       |> render("index.json", reserves: reserves)
+  end
+
+  def create_loan(conn, %{"book_id" => book_id, "user_id"=> user_id}) do
+    book = BookRepository.get_book!(book_id)
+    case LoanRepository.add_loan_to_user(book_id, user_id) do
+      {:ok, _struct} ->
+        BookRepository.update_book(book, %{:status=> :loaned})
+        Response.ok(conn)
+      _ -> Response.bad_request(conn)
+    end
+  end
+
+  def list_loans(conn, %{"returned" => returned}) do
+    IO.inspect(returned)
+    loans = case String.to_atom(returned) do
+      true -> LoanRepository.list_all_returned()
+      false -> LoanRepository. list_all_no_returned()
+    end
+    loans = loans
+    |> Enum.map(fn loan -> book = BookRepository.get_book!(loan.book_id)
+     Map.put(loan, :book, book) end)
+    |> Enum.map(fn loan -> user = UserRepository.get_user!(loan.user_id)
+    Map.put(loan, :user, user) end)
+    conn
+      |> put_status(:ok)
+      |> put_view(LoanView)
+      |> render("index.json", loans: loans)
+
+  end
+
+  def list_loans(conn, _params) do
+    loans = LoanRepository.list_all()
+
+    loans = loans
+    |> Enum.map(fn loan -> book = BookRepository.get_book!(loan.book_id)
+     Map.put(loan, :book, book) end)
+    |> Enum.map(fn loan -> user = UserRepository.get_user!(loan.user_id)
+    Map.put(loan, :user, user) end)
+    conn
+      |> put_status(:ok)
+      |> put_view(LoanView)
+      |> render("index.json", loans: loans)
+
   end
 end

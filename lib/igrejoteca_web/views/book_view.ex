@@ -17,7 +17,8 @@ defmodule IgrejotecaWeb.BookView do
       subtitle: book.subtitle,
       autor: book.autor,
       category: book.category,
-      pages: book.pages
+      pages: book.pages,
+      status: book.status
     }
   end
 end

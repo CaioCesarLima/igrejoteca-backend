@@ -15,11 +15,13 @@ defmodule IgrejotecaWeb.ReserveView do
       id: reserve.id,
       book: %{
         title: reserve.book.title,
-        subtitle: reserve.book.subtitle
+        subtitle: reserve.book.subtitle,
+        book_id: reserve.book.id
       },
       user: %{
         name: reserve.user.name,
-        email: reserve.user.email
+        email: reserve.user.email,
+        user_id: reserve.user.id
       }
     }
   end
