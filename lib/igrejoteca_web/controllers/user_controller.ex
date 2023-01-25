@@ -33,6 +33,20 @@ defmodule IgrejotecaWeb.UserController do
     end
   end
 
+  def incremment_score(%{assigns: %{current_user: current_user}} = conn, _params) do
+
+    user = Repository.get_user!(current_user)
+    IO.inspect(user)
+
+    user_params = %{
+      "score_quiz" => user.score_quiz + 100
+    }
+
+    with {:ok, %User{} = user} <- Repository.update_user(user, user_params) do
+      render(conn, "show.json", user: user)
+    end
+  end
+
   def delete(conn, %{"id" => id}) do
     user = Repository.get_user!(id)
 

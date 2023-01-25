@@ -32,9 +32,16 @@ defmodule IgrejotecaWeb.Router do
 
     post "/loans", BookController, :create_loan
     get "/loans", BookController, :list_loans
-    # get "/loan-user", BookController, :user_reserves
+    delete "/loans/:loan_id", BookController, :return_loan
+    get "/loan-user", BookController, :user_loans
 
     resources "/desires", DesireController, except: [:new, :edit]
+
+    resources "/questions", QuestionController, except: [:new, :edit]
+    put "/question/correct", UserController, :incremment_score
+    resources "/answers", AnswerController, except: [:new, :edit]
+
+    resources "/clubs", ClubController, except: [:new, :edit]
   end
 
   scope "/auth", IgrejotecaWeb do

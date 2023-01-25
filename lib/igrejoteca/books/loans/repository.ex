@@ -36,6 +36,7 @@ defmodule Igrejoteca.Books.Loan.Repository do
     Repo.all(query)
   end
 
+  def get_loan!(id), do: Repo.get!(Loan, id)
 
   # def get_prayer_id!(prayer_id) do
 
@@ -56,6 +57,12 @@ defmodule Igrejoteca.Books.Loan.Repository do
     %Loan{}
     |> Loan.changeset(attrs)
     |> Repo.insert()
+  end
+
+  def update_loan(%Loan{} = loan, attrs) do
+    loan
+    |> Loan.changeset(attrs)
+    |> Repo.update()
   end
 
 end

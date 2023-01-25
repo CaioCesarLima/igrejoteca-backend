@@ -128,6 +128,14 @@ defmodule IgrejotecaWeb.BookController do
     end
   end
 
+  def return_loan(conn, %{"loan_id" => loan_id}) do
+    loan = LoanRepository.get_loan!(loan_id)
+    LoanRepository.update_loan(loan, %{:returned=> true})
+    book = BookRepository.get_book!(loan.book_id)
+    BookRepository.update_book(book, %{:status=> :released})
+    Response.ok(conn)
+  end
+
   def list_loans(conn, %{"returned" => returned}) do
     IO.inspect(returned)
     loans = case String.to_atom(returned) do
@@ -159,5 +167,20 @@ defmodule IgrejotecaWeb.BookController do
       |> put_view(LoanView)
       |> render("index.json", loans: loans)
 
+  end
+
+
+  def user_loans(%{assigns: %{current_user: current_user}} = conn, _params) do
+    loans = LoanRepository.loans_by_user(current_user)
+
+    loans = loans
+    |> Enum.map(fn loan -> book = BookRepository.get_book!(loan.book_id)
+     Map.put(loan, :book, book) end)
+    |> Enum.map(fn loan -> user = UserRepository.get_user!(loan.user_id)
+    Map.put(loan, :user, user) end)
+    conn
+      |> put_status(:ok)
+      |> put_view(LoanView)
+      |> render("index.json", loans: loans)
   end
 end

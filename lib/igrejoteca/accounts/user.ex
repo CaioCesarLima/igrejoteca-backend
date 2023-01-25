@@ -12,7 +12,7 @@ defmodule Igrejoteca.Accounts.User do
   @min_password_lenght 8
 
   # Fields
-  @cast_fields [:name, :email, :password]
+  @cast_fields [:name, :email, :password, :score_quiz]
   @mandatory_fields [:name, :email, :password]
 
   @primary_key {:id, :binary_id, autogenerate: true}
@@ -23,6 +23,7 @@ defmodule Igrejoteca.Accounts.User do
     field :name, :string
     field :password, :string, virtual: true
     field :password_hash, :string
+    field :score_quiz, :integer, default: 100
 
     timestamps()
   end

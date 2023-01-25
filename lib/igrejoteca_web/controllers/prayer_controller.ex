@@ -22,10 +22,13 @@ defmodule IgrejotecaWeb.PrayerController do
       "owner_id"=> current_user
     }
     with {:ok, %Prayer{} = prayer} <- PrayerRepository.create_prayer(prayer_params) do
+      prayerOne = PrayerRepository.get_prayer!(prayer.id)
+      |> List.first()
+      IO.inspect(prayerOne)
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.prayer_path(conn, :show, prayer))
-      |> render("show.json", prayer: prayer)
+      |> put_resp_header("location", Routes.prayer_path(conn, :show, prayerOne))
+      |> render("show.json", prayer: prayerOne)
     end
   end
 
