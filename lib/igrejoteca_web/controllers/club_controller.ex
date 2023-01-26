@@ -5,6 +5,9 @@ defmodule IgrejotecaWeb.ClubController do
   alias Igrejoteca.BookClub.Club
   alias Igrejoteca.Books.BookRepository
   alias Igrejoteca.Accounts.Repository, as: UserRepository
+  alias Igrejoteca.BookClub.Member.Repository, as: MemberRepository
+
+  alias IgrejotecaWeb.ClubView
 
   action_fallback IgrejotecaWeb.FallbackController
 
@@ -17,6 +20,7 @@ defmodule IgrejotecaWeb.ClubController do
     |> Enum.map(fn club -> user = UserRepository.get_user!(club.owner_id)
     Map.put(club, :owner, user) end)
 
+    render(conn, "index.json", clubs: clubs)
   end
 
   def create(%{assigns: %{current_user: current_user}} = conn, %{"name" => name, "book_id" => book_id}) do
@@ -65,5 +69,60 @@ defmodule IgrejotecaWeb.ClubController do
     with {:ok, %Club{}} <- Repository.delete_club(club) do
       send_resp(conn, :no_content, "")
     end
+  end
+
+  def add_member(%{assigns: %{current_user: current_user}} = conn, %{"club_id" => club_id}) do
+    with {:ok, _club} <- MemberRepository.add_club_to_user(club_id, current_user) do
+      send_resp(conn, :ok, "")
+    end
+  end
+
+  def list_clubs(%{assigns: %{current_user: current_user}} = conn, _params) do
+    clubs = MemberRepository.list_clubs_user(current_user)
+    clubs = clubs
+    |> Enum.map(fn club -> get_club_information(club) end)
+
+    IO.inspect(clubs)
+
+
+    conn
+      |> put_status(:ok)
+      |> put_view(ClubView)
+      |> render("index.json", clubs: clubs)
+
+  end
+
+  # def list_members(conn, _params) do
+  #   reserves = ReserveRepository.list_all()
+  #   IO.inspect(reserves, label: "reserva original")
+  #   reserves = reserves
+  #   |> Enum.map(fn reserve -> book = BookRepository.get_book!(reserve.book_id)
+  #    Map.put(reserve, :book, book) end)
+  #   |> Enum.map(fn reserve -> user = UserRepository.get_user!(reserve.user_id)
+  #   Map.put(reserve, :user, user) end)
+
+  #   Enum.each(reserves, fn reserve -> IO.inspect(reserve.book.title) end)
+
+  #   conn
+  #     |> put_status(:ok)
+  #     |> put_view(ReserveView)
+  #     |> render("index.json", reserves: reserves)
+
+  # end
+  defp get_club_information(relation) do
+      IO.inspect(relation, label: "relation")
+      club = Repository.get_club!(relation.club_id)
+      IO.inspect(club, label: "club")
+      relation = Map.put(relation, :club, club)
+      IO.inspect(relation, label: "relation")
+      book = BookRepository.get_book!(relation.club.book_id)
+      IO.inspect(book, label: "book")
+      IO.inspect(relation.club, label: "relation club")
+      relation_book = Map.put(relation.club, :book, book)
+      relation = Map.put(relation, :club, relation_book)
+      IO.inspect(relation, label: "relation")
+      owner = UserRepository.get_user!(relation.club.owner_id)
+      IO.inspect(owner, label: "owner")
+      Map.put(relation.club, :owner, owner)
   end
 end
