@@ -6,6 +6,7 @@ defmodule IgrejotecaWeb.ClubController do
   alias Igrejoteca.Books.BookRepository
   alias Igrejoteca.Accounts.Repository, as: UserRepository
   alias Igrejoteca.BookClub.Member.Repository, as: MemberRepository
+  alias IgrejotecaWeb.UserView
 
   alias IgrejotecaWeb.ClubView
 
@@ -92,37 +93,29 @@ defmodule IgrejotecaWeb.ClubController do
 
   end
 
-  # def list_members(conn, _params) do
-  #   reserves = ReserveRepository.list_all()
-  #   IO.inspect(reserves, label: "reserva original")
-  #   reserves = reserves
-  #   |> Enum.map(fn reserve -> book = BookRepository.get_book!(reserve.book_id)
-  #    Map.put(reserve, :book, book) end)
-  #   |> Enum.map(fn reserve -> user = UserRepository.get_user!(reserve.user_id)
-  #   Map.put(reserve, :user, user) end)
+  def list_members(conn, %{"club_id" => club_id}) do
+    IO.inspect(club_id)
+    clubs = MemberRepository.list_users_club(club_id)
+    users = clubs
+    |> Enum.map(fn club -> UserRepository.get_user!(club.user_id) end)
 
-  #   Enum.each(reserves, fn reserve -> IO.inspect(reserve.book.title) end)
+    IO.inspect(users)
 
-  #   conn
-  #     |> put_status(:ok)
-  #     |> put_view(ReserveView)
-  #     |> render("index.json", reserves: reserves)
 
+    conn
+      |> put_status(:ok)
+      |> put_view(UserView)
+      |> render("index.json", users: users)
+
+  end
   # end
   defp get_club_information(relation) do
-      IO.inspect(relation, label: "relation")
       club = Repository.get_club!(relation.club_id)
-      IO.inspect(club, label: "club")
       relation = Map.put(relation, :club, club)
-      IO.inspect(relation, label: "relation")
       book = BookRepository.get_book!(relation.club.book_id)
-      IO.inspect(book, label: "book")
-      IO.inspect(relation.club, label: "relation club")
       relation_book = Map.put(relation.club, :book, book)
       relation = Map.put(relation, :club, relation_book)
-      IO.inspect(relation, label: "relation")
       owner = UserRepository.get_user!(relation.club.owner_id)
-      IO.inspect(owner, label: "owner")
       Map.put(relation.club, :owner, owner)
   end
 end

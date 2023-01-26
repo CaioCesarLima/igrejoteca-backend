@@ -44,6 +44,7 @@ defmodule IgrejotecaWeb.Router do
     resources "/clubs", ClubController, except: [:new, :edit]
     post "/club/member", ClubController, :add_member
     get "/club/clubs-user", ClubController, :list_clubs
+    get "/club/users-club", ClubController, :list_members
   end
 
   scope "/auth", IgrejotecaWeb do
