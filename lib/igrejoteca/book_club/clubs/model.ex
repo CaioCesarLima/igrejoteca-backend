@@ -2,6 +2,8 @@ defmodule Igrejoteca.BookClub.Club do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Igrejoteca.BookClub.Post
+
   @cast_fields [:name, :owner_id, :book_id]
   @mandatory_fields [:name]
 
@@ -12,6 +14,7 @@ defmodule Igrejoteca.BookClub.Club do
     field :name, :string
     field :owner_id, :binary_id
     field :book_id, :binary_id
+    has_many :posts, Post
 
     timestamps()
   end

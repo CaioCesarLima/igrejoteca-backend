@@ -17,4 +17,18 @@ defmodule Igrejoteca.BookClubFixtures do
 
     club
   end
+
+  @doc """
+  Generate a post.
+  """
+  def post_fixture(attrs \\ %{}) do
+    {:ok, post} =
+      attrs
+      |> Enum.into(%{
+        text: "some text"
+      })
+      |> Igrejoteca.BookClub.create_post()
+
+    post
+  end
 end

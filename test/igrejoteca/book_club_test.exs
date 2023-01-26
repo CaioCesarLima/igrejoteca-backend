@@ -56,4 +56,58 @@ defmodule Igrejoteca.BookClubTest do
       assert %Ecto.Changeset{} = BookClub.change_club(club)
     end
   end
+
+  describe "posts" do
+    alias Igrejoteca.BookClub.Post
+
+    import Igrejoteca.BookClubFixtures
+
+    @invalid_attrs %{text: nil}
+
+    test "list_posts/0 returns all posts" do
+      post = post_fixture()
+      assert BookClub.list_posts() == [post]
+    end
+
+    test "get_post!/1 returns the post with given id" do
+      post = post_fixture()
+      assert BookClub.get_post!(post.id) == post
+    end
+
+    test "create_post/1 with valid data creates a post" do
+      valid_attrs = %{text: "some text"}
+
+      assert {:ok, %Post{} = post} = BookClub.create_post(valid_attrs)
+      assert post.text == "some text"
+    end
+
+    test "create_post/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = BookClub.create_post(@invalid_attrs)
+    end
+
+    test "update_post/2 with valid data updates the post" do
+      post = post_fixture()
+      update_attrs = %{text: "some updated text"}
+
+      assert {:ok, %Post{} = post} = BookClub.update_post(post, update_attrs)
+      assert post.text == "some updated text"
+    end
+
+    test "update_post/2 with invalid data returns error changeset" do
+      post = post_fixture()
+      assert {:error, %Ecto.Changeset{}} = BookClub.update_post(post, @invalid_attrs)
+      assert post == BookClub.get_post!(post.id)
+    end
+
+    test "delete_post/1 deletes the post" do
+      post = post_fixture()
+      assert {:ok, %Post{}} = BookClub.delete_post(post)
+      assert_raise Ecto.NoResultsError, fn -> BookClub.get_post!(post.id) end
+    end
+
+    test "change_post/1 returns a post changeset" do
+      post = post_fixture()
+      assert %Ecto.Changeset{} = BookClub.change_post(post)
+    end
+  end
 end
