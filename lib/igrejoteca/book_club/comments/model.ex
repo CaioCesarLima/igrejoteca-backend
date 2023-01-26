@@ -1,29 +1,28 @@
-defmodule Igrejoteca.BookClub.Post do
+defmodule Igrejoteca.BookClub.Comment do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Igrejoteca.BookClub.Club
-  alias Igrejoteca.Accounts.User
-  alias Igrejoteca.BookClub.Comment
 
-  @cast_fields [:text, :user_id, :club_id]
+  alias Igrejoteca.BookClub.Post
+  alias Igrejoteca.Accounts.User
+
+  @cast_fields [:text, :user_id, :post_id]
   @mandatory_fields [:text]
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
 
-  schema "posts" do
+  schema "comments" do
     field :text, :string
     belongs_to :user, User
-    belongs_to :club, Club
+    belongs_to :post, Post
 
-    has_many :comments, Comment
     timestamps()
   end
 
   @doc false
-  def changeset(post, attrs) do
-    post
+  def changeset(comment, attrs) do
+    comment
     |> cast(attrs, @cast_fields)
     |> validate_required(@mandatory_fields)
   end

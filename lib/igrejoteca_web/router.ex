@@ -46,6 +46,7 @@ defmodule IgrejotecaWeb.Router do
     get "/club/clubs-user", ClubController, :list_clubs
     get "/club/users-club", ClubController, :list_members
     resources "/club/posts", PostController, except: [:new, :edit]
+    resources "/club/post/comments", CommentController, except: [:new, :edit]
   end
 
   scope "/auth", IgrejotecaWeb do

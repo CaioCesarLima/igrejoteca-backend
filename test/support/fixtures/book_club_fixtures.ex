@@ -31,4 +31,18 @@ defmodule Igrejoteca.BookClubFixtures do
 
     post
   end
+
+  @doc """
+  Generate a comment.
+  """
+  def comment_fixture(attrs \\ %{}) do
+    {:ok, comment} =
+      attrs
+      |> Enum.into(%{
+        text: "some text"
+      })
+      |> Igrejoteca.BookClub.create_comment()
+
+    comment
+  end
 end
