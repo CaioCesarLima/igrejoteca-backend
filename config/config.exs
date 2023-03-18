@@ -10,12 +10,15 @@ import Config
 config :igrejoteca,
   ecto_repos: [Igrejoteca.Repo]
 
+config :igrejoteca, Igrejoteca.Repo,
+  ssl: true
 # Configures the endpoint
 config :igrejoteca, IgrejotecaWeb.Endpoint,
   url: [host: "localhost"],
   render_errors: [view: IgrejotecaWeb.ErrorView, accepts: ~w(json), layout: false],
   pubsub_server: Igrejoteca.PubSub,
-  live_view: [signing_salt: "WWa58wK1"]
+  live_view: [signing_salt: "WWa58wK1"],
+  force_ssl: [rewrite_on: [:x_forward_proto]]
 
 config :igrejoteca, Igrejoteca.Accounts.Guardian,
   issuer: "igrejoteca",
