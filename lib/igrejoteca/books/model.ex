@@ -3,7 +3,7 @@ defmodule Igrejoteca.Books.Book do
   import Ecto.Changeset
 
 
-  @cast_fields [:autor, :category, :pages, :subtitle, :title]
+  @cast_fields [:autor, :category, :pages, :subtitle, :title, :status]
   @mandatory_fields [:title]
 
   @primary_key {:id, :binary_id, autogenerate: true}
@@ -15,6 +15,7 @@ defmodule Igrejoteca.Books.Book do
     field :pages, :string
     field :subtitle, :string
     field :title, :string
+    field :status, Ecto.Enum, values: [:loaned, :reserved, :released], default: :released
 
     timestamps()
   end

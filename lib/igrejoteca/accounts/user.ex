@@ -4,6 +4,8 @@ defmodule Igrejoteca.Accounts.User do
 
 
   alias Igrejoteca.Utils.Hashing
+  alias Igrejoteca.BookClub.Post
+  alias Igrejoteca.BookClub.Comment
   Igrejoteca.PrayerRequest.Testimonials.Testimony
 
   @email_regex ~r/^[a-z0-9._+-]+@[a-z0-9.-]+\.[a-z]{2,63}$/
@@ -12,7 +14,7 @@ defmodule Igrejoteca.Accounts.User do
   @min_password_lenght 8
 
   # Fields
-  @cast_fields [:name, :email, :password]
+  @cast_fields [:name, :email, :password, :score_quiz]
   @mandatory_fields [:name, :email, :password]
 
   @primary_key {:id, :binary_id, autogenerate: true}
@@ -23,6 +25,9 @@ defmodule Igrejoteca.Accounts.User do
     field :name, :string
     field :password, :string, virtual: true
     field :password_hash, :string
+    field :score_quiz, :integer, default: 10
+    has_many :posts, Post
+    has_many :comments, Comment
 
     timestamps()
   end

@@ -1,0 +1,25 @@
+
+<div class="container">
+  <h2 class="text-center">Lista de reservas</h2>
+  <table class="table table-bordered table-striped text-center mx-auto">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Livro</th>
+        <th>Usuário</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+    <%= for loan <- @loans do %>
+      <tr>
+        <td><%= loan.id %></td>
+        <td><%= loan.user.name %></td>
+        <td><%= loan.book.title %></td>
+        <td><button phx-click="delivered" phx-value-id={loan.id} class="btn-success">Entregue</button></td>
+      </tr>
+    <% end %>
+
+    </tbody>
+  </table>
+</div>

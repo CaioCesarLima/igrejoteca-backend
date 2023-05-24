@@ -18,7 +18,8 @@ defmodule Igrejoteca.PrayerRequest.Testimonials.Repository do
 
   """
   def list_testimonials do
-    Repo.all(Testimony)
+    Repo.all from t in Testimony,
+    preload: [:owner]
   end
 
   @doc """

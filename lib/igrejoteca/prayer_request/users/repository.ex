@@ -24,10 +24,6 @@ defmodule Igrejoteca.PrayerRequest.PrayerUsers.Repository do
     Repo.all(query)
   end
 
-  def get_prayer_id!(prayer_id) do
-
-  end
-
   def list_prayers_user(user_id) do
     query = from pu in PrayerUsers,
       where: pu.user_id == ^user_id

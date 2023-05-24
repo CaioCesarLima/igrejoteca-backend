@@ -6,6 +6,28 @@ defmodule IgrejotecaWeb.Router do
     plug IgrejotecaWeb.Middlewares.AuthenticationPlug
   end
 
+  pipeline :browser do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_live_flash
+    plug :put_root_layout, {IgrejotecaWeb.LayoutView, :root}
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+  end
+
+
+  scope "/", IgrejotecaWeb do
+    pipe_through :browser
+
+    # get "/", PageController, :index
+    live "/example", HomeLive, :index
+    live "/error", ErrorLive, :index
+    live "/loans", LoansLive, :index
+    live "/reserves", ReservesLive, :index
+    live "/books", BooksLive, :index
+    live "/quiz", QuizLive, :index
+
+  end
   # scope "/api", IgrejotecaWeb do
   #   pipe_through :api
 
@@ -15,6 +37,7 @@ defmodule IgrejotecaWeb.Router do
     pipe_through [:api, :authenticate]
 
     resources "/prayer", PrayerController, except: [:new, :edit]
+    get "/prayers-all", PrayerController, :get_all_prayers
     post "/prayers/like", PrayerController, :add_user
     delete "/prayers/like", PrayerController, :remove_user
     get "/prayers/like", PrayerController, :list_prayers_user
@@ -25,7 +48,28 @@ defmodule IgrejotecaWeb.Router do
     post "/isbn-book", BookController, :isbn_book
     get "/search-books", BookController, :search_books
 
+    post "/reserves", BookController, :create_reserve
+    delete "/reserves", BookController, :remove_reserve
+    get "/reserves", BookController, :list_reserves
+    get "/reserve-user", BookController, :user_reserves
+
+    post "/loans", BookController, :create_loan
+    get "/loans", BookController, :list_loans
+    delete "/loans/:loan_id", BookController, :return_loan
+    get "/loan-user", BookController, :user_loans
+
     resources "/desires", DesireController, except: [:new, :edit]
+
+    resources "/questions", QuestionController, except: [:new, :edit]
+    put "/question/correct", UserController, :incremment_score
+    resources "/answers", AnswerController, except: [:new, :edit]
+
+    resources "/clubs", ClubController, except: [:new, :edit]
+    post "/club/member", ClubController, :add_member
+    get "/club/clubs-user", ClubController, :list_clubs
+    get "/club/users-club", ClubController, :list_members
+    resources "/club/posts", PostController, except: [:new, :edit]
+    resources "/club/post/comments", CommentController, except: [:new, :edit]
   end
 
   scope "/auth", IgrejotecaWeb do

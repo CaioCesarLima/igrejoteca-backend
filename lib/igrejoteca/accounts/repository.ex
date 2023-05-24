@@ -62,6 +62,7 @@ defmodule Igrejoteca.Accounts.Repository do
     user
     |> User.changeset(attrs)
     |> Repo.update()
+    |> IO.inspect()
   end
 
   @doc """

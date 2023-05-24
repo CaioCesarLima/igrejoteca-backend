@@ -5,6 +5,8 @@ defmodule IgrejotecaWeb.AuthController do
     alias Igrejoteca.Accounts.Guardian
     alias IgrejotecaWeb.Resolvers.Accounts.{LoginResolver, SignUpResolver}
     alias IgrejotecaWeb.Utils.Response
+    alias Igrejoteca.Quiz.Score.Repository, as: ScoreRepository
+    alias Igrejoteca.Quiz.Score
 
     action_fallback IgrejotecaWeb.FallbackController
 
@@ -15,7 +17,10 @@ defmodule IgrejotecaWeb.AuthController do
         |> case do
             nil -> Response.unauthorized(conn)
             user ->
+                score = ScoreRepository.get_score_by_user_id(user.id)
+
                 user
+                |> Map.put(:score, score)
                 |> gen_token()
                 |> case do
                     nil -> Response.forbidden(conn)
@@ -36,7 +41,10 @@ defmodule IgrejotecaWeb.AuthController do
         |> SignUpResolver.signup()
         |> case do
             {:ok, %User{} = user} ->
+                {:ok, %Score{} = score} = ScoreRepository.create_score(%{"user_id"=> user.id, "score" => 0})
+                IO.inspect(score)
                 user
+                |> Map.put(:score, score.score)
                 |> gen_token()
                 |> case do
                     nil -> Response.forbidden(conn)
