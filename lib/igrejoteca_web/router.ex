@@ -6,6 +6,28 @@ defmodule IgrejotecaWeb.Router do
     plug IgrejotecaWeb.Middlewares.AuthenticationPlug
   end
 
+  pipeline :browser do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_live_flash
+    plug :put_root_layout, {IgrejotecaWeb.LayoutView, :root}
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+  end
+
+
+  scope "/", IgrejotecaWeb do
+    pipe_through :browser
+
+    # get "/", PageController, :index
+    live "/example", HomeLive, :index
+    live "/error", ErrorLive, :index
+    live "/loans", LoansLive, :index
+    live "/reserves", ReservesLive, :index
+    live "/books", BooksLive, :index
+    live "/quiz", QuizLive, :index
+
+  end
   # scope "/api", IgrejotecaWeb do
   #   pipe_through :api
 
@@ -15,6 +37,7 @@ defmodule IgrejotecaWeb.Router do
     pipe_through [:api, :authenticate]
 
     resources "/prayer", PrayerController, except: [:new, :edit]
+    get "/prayers-all", PrayerController, :get_all_prayers
     post "/prayers/like", PrayerController, :add_user
     delete "/prayers/like", PrayerController, :remove_user
     get "/prayers/like", PrayerController, :list_prayers_user

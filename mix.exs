@@ -48,7 +48,11 @@ defmodule Igrejoteca.MixProject do
       {:bcrypt_elixir, "~> 3.0"},
       {:argon2_elixir, "~> 3.0"},
       {:guardian, "~> 2.2"},
-      {:httpoison, "~> 1.8"}
+      {:httpoison, "~> 1.8"},
+      {:phoenix_live_view, "~> 0.18"},
+      {:phoenix_live_reload, "~> 1.2", only: :dev},
+      {:floki, ">= 0.30.0", only: :test},
+      {:tailwind, "~> 0.1", runtime: Mix.env() == :dev}
     ]
   end
 
@@ -64,7 +68,7 @@ defmodule Igrejoteca.MixProject do
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
-      "assets.deploy": ["esbuild default --minify", "phx.digest"]
+      "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]
     ]
   end
 end

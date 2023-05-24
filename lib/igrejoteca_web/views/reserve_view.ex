@@ -16,7 +16,7 @@ defmodule IgrejotecaWeb.ReserveView do
       book: %{
         title: reserve.book.title,
         subtitle: reserve.book.subtitle,
-        book_id: reserve.book.id
+        id: reserve.book.id
       },
       user: %{
         name: reserve.user.name,

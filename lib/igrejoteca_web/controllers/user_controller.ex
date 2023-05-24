@@ -3,6 +3,8 @@ defmodule IgrejotecaWeb.UserController do
 
   alias Igrejoteca.Accounts.Repository
   alias Igrejoteca.Accounts.User
+  alias Igrejoteca.Quiz.Score.Repository, as: ScoreRepository
+  alias IgrejotecaWeb.Utils.Response
 
   action_fallback IgrejotecaWeb.FallbackController
 
@@ -35,15 +37,17 @@ defmodule IgrejotecaWeb.UserController do
 
   def incremment_score(%{assigns: %{current_user: current_user}} = conn, _params) do
 
-    user = Repository.get_user!(current_user)
-    IO.inspect(user)
+    score = ScoreRepository.get_score_by_user_id(current_user)
+    IO.inspect(score)
 
-    user_params = %{
-      "score_quiz" => user.score_quiz + 100
+    score_params = %{
+      "user_id" => current_user,
+      "score" => score.score + 50
     }
 
-    with {:ok, %User{} = user} <- Repository.update_user(user, user_params) do
-      render(conn, "show.json", user: user)
+
+    with {:ok, _user} <- ScoreRepository.update_score(score, score_params) do
+      Response.ok(conn)
     end
   end
 

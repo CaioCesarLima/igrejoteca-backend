@@ -18,7 +18,8 @@ defmodule Igrejoteca.PrayerRequest.PrayerRepository do
 
   """
   def list_prayers do
-    Repo.all(Prayer)
+    Repo.all from p in Prayer,
+    preload: [:owner]
   end
 
   @doc """

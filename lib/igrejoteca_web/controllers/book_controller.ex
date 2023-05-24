@@ -68,6 +68,7 @@ defmodule IgrejotecaWeb.BookController do
 
   def create_reserve(%{assigns: %{current_user: current_user}} = conn, %{"book_id" => book_id}) do
     book = BookRepository.get_book!(book_id)
+    IO.inspect(book)
     case ReserveRepository.add_reserve_to_book(book_id, current_user) do
       {:ok, _struct} ->
         BookRepository.update_book(book, %{:status=> :reserved})

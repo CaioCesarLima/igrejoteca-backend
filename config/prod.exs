@@ -14,13 +14,13 @@ config :igrejoteca, IgrejotecaWeb.Endpoint, cache_static_manifest: "priv/static/
 # Do not print debug messages in production
 config :logger, level: :info
 
-config :igrejoteca-api, IgrejotecaWeb.Endpoint,
+config :igrejotecaapi, IgrejotecaWeb.Endpoint,
   http: [port: System.get_env("PORT")], # Possibly not needed, but doesn't hurt
   url: [host: System.get_env("APP_NAME") <> ".gigalixirapp.com", port: 443],
   secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE"),
   server: true
 
-config :igrejoteca-api, Igrejoteca.Repo,
+config :igrejotecaapi, Igrejoteca.Repo,
   adapter: Ecto.Adapters.Postgres,
   url: System.get_env("DATABASE_URL"),
   ssl: true,

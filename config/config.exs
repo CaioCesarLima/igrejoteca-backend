@@ -10,15 +10,12 @@ import Config
 config :igrejoteca,
   ecto_repos: [Igrejoteca.Repo]
 
-config :igrejoteca, Igrejoteca.Repo,
-  ssl: true
 # Configures the endpoint
 config :igrejoteca, IgrejotecaWeb.Endpoint,
   url: [host: "localhost"],
   render_errors: [view: IgrejotecaWeb.ErrorView, accepts: ~w(json), layout: false],
   pubsub_server: Igrejoteca.PubSub,
-  live_view: [signing_salt: "WWa58wK1"],
-  force_ssl: [rewrite_on: [:x_forward_proto]]
+  live_view: [signing_salt: "WWa58wK1"]
 
 config :igrejoteca, Igrejoteca.Accounts.Guardian,
   issuer: "igrejoteca",
@@ -54,6 +51,15 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
+config :tailwind, version: "3.3.0", default: [
+  args: ~w(
+    --config=tailwind.config.js
+    --input=css/app.css
+    --output=../priv/static/assets/app.css
+  ),
+  cd: Path.expand("../assets", __DIR__)
+]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

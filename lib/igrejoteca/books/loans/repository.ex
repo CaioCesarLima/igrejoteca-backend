@@ -65,4 +65,8 @@ defmodule Igrejoteca.Books.Loan.Repository do
     |> Repo.update()
   end
 
+  def delete_loan(%Loan{} = loan) do
+    Repo.delete(loan)
+  end
+
 end

@@ -12,7 +12,8 @@ defmodule IgrejotecaWeb.AuthView do
         user: %{
             id: user.id,
             name: user.name,
-            email: user.email
+            email: user.email,
+            score_quiz: user.score.score
         }
       }
     end

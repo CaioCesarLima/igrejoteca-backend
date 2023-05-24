@@ -18,7 +18,7 @@ defmodule IgrejotecaWeb.LoanView do
       book: %{
         title: loan.book.title,
         subtitle: loan.book.subtitle,
-        book_id: loan.book.id
+        id: loan.book.id
       },
       user: %{
         name: loan.user.name,

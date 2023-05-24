@@ -11,10 +11,11 @@ defmodule IgrejotecaWeb.TestimonyView do
   end
 
   def render("testimony.json", %{testimony: testimony}) do
+    IO.inspect(testimony)
     %{
       id: testimony.id,
       description: testimony.description,
-      owner_id: testimony.owner_id
+      owner: testimony.owner.name
     }
   end
 end

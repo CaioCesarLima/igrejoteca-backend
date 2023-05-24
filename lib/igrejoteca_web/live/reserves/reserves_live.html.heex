@@ -1,0 +1,33 @@
+
+<div class="container">
+  <h2 class="text-center">Lista de reservas</h2>
+  <button class="btn-success">Criar reserva</button>
+    <h1 class="text-3xl font-bold underline text-red-700">
+        Hello world!
+    </h1>
+  <%= if @loans != []  do%>
+    <table class="table table-bordered table-striped text-center mx-auto">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Livro</th>
+        <th>Usuário</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+    <%= for loan <- @loans do %>
+      <tr>
+        <td><%= loan.id %></td>
+        <td><%= loan.user.name %></td>
+        <td><%= loan.book.title %></td>
+        <td><button phx-click="delivered" phx-value-id={loan.id} class="btn-success">Entregue</button></td>
+      </tr>
+    <% end %>
+
+    </tbody>
+  </table>
+  <% else %>
+  <h3> Nenhuma reserva no sistema</h3>
+  <% end%>
+</div>

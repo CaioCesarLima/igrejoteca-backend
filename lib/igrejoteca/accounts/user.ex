@@ -25,7 +25,7 @@ defmodule Igrejoteca.Accounts.User do
     field :name, :string
     field :password, :string, virtual: true
     field :password_hash, :string
-    field :score_quiz, :integer, default: 100
+    field :score_quiz, :integer, default: 10
     has_many :posts, Post
     has_many :comments, Comment
 

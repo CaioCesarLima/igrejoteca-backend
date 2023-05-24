@@ -3,6 +3,8 @@ defmodule IgrejotecaWeb.TestimonyController do
 
   alias Igrejoteca.PrayerRequest.Testimonials.Repository
   alias Igrejoteca.PrayerRequest.Testimonials.Testimony
+  alias Igrejoteca.Accounts.Repository, as: UserRepository
+  alias IgrejotecaWeb.Utils.Response
 
   action_fallback IgrejotecaWeb.FallbackController
 
@@ -12,15 +14,16 @@ defmodule IgrejotecaWeb.TestimonyController do
   end
 
   def create(%{assigns: %{current_user: current_user}} = conn, %{"description" => description}) do
+    owner = UserRepository.get_user!(current_user)
+    |> IO.inspect()
     testimony_params = %{
       "description" => description,
-      "owner_id" => current_user
+      "owner_id" => current_user,
+      "owner" => owner
     }
     with {:ok, %Testimony{} = testimony} <- Repository.create_testimony(testimony_params) do
       conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.testimony_path(conn, :show, testimony))
-      |> render("show.json", testimony: testimony)
+      |> Response.created()
     end
   end
 
