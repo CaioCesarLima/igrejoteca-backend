@@ -3,6 +3,8 @@ defmodule IgrejotecaWeb.AnswerController do
 
   alias Igrejoteca.Quiz.Answers.Repository
   alias Igrejoteca.Quiz.Answer
+  alias IgrejotecaWeb.Utils.Response
+  alias Igrejoteca.Quiz.Questions
 
   action_fallback IgrejotecaWeb.FallbackController
 
@@ -11,13 +13,18 @@ defmodule IgrejotecaWeb.AnswerController do
     render(conn, "index.json", answers: answers)
   end
 
-  def create(conn, %{"answer" => answer_params}) do
-    with {:ok, %Answer{} = answer} <- Repository.create_answer(answer_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.answer_path(conn, :show, answer))
-      |> render("show.json", answer: answer)
-    end
+  def answers_question(conn, %{"question_id" => question_id}) do
+    answers = Repository.list_answers_by_question(question_id)
+    render(conn, "index.json", answers: answers)
+  end
+
+  def create(conn, %{"answers" => list_answers}) do
+
+    Enum.each(list_answers, fn answer_params ->
+      Repository.create_answer(answer_params)end)
+
+    Response.ok(conn)
+
   end
 
   def show(conn, %{"id" => id}) do

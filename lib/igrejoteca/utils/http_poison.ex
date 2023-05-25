@@ -13,7 +13,7 @@ defmodule Igrejoteca.Utils.HttpPoison do
         }
     }"
 
-    headers = [{"Content-type", "application/json"}, {"Authorization", "key=AAAAa1tsGck:APA91bHgb_kYg-CDptuzI1-JBtfI3TDMdgEtXyi2pX7Yf0UeMjBNGHj_MDVzAYyUWasPZED_Yf5SyouZ7_z4S5TsPDMgA7EpDY1r_rjWf2W2OWpOZbeh0EJKS8vFyO8JJ1cUt4yxzjck"}]
+    headers = [{"Content-type", "application/json"}, {"Authorization", "key=AAAA5NlQu8k:APA91bHZ3O6lMewbdrbwLUNnTT1zSFNJj_xd8uoB1rQeiRQu14zDaVZ9Kz_BGj7N5sYGNosbN0r-xYVuTFgsoKR_NEJwqcaYws__CLKaenCgJTRTk3tEMz0qt7bjxdxUxUHAlUx3Bnt-"}]
 
 
     case HTTPoison.post(url, body, headers, []) do

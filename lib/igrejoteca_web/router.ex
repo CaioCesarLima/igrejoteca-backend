@@ -63,6 +63,7 @@ defmodule IgrejotecaWeb.Router do
     resources "/questions", QuestionController, except: [:new, :edit]
     put "/question/correct", UserController, :incremment_score
     resources "/answers", AnswerController, except: [:new, :edit]
+    get "/answer/:question_id", AnswerController, :answers_question
 
     resources "/clubs", ClubController, except: [:new, :edit]
     post "/club/member", ClubController, :add_member
@@ -70,6 +71,8 @@ defmodule IgrejotecaWeb.Router do
     get "/club/users-club", ClubController, :list_members
     resources "/club/posts", PostController, except: [:new, :edit]
     resources "/club/post/comments", CommentController, except: [:new, :edit]
+
+    resources "/notifications", NotificationController, except: [:new, :edit]
   end
 
   scope "/auth", IgrejotecaWeb do

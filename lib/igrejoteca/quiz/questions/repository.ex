@@ -18,9 +18,13 @@ defmodule Igrejoteca.Quiz.Questions.Repository do
 
   """
   def list_questions do
-    Repo.all(from q in Question, preload: [:answers])
+    Repo.all(Question)
   end
 
+  def get_random_question do
+    questions = Repo.all(Question)
+    Enum.random(questions)
+  end
   @doc """
   Gets a single question.
 

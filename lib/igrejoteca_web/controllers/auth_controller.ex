@@ -39,6 +39,7 @@ defmodule IgrejotecaWeb.AuthController do
     }) do
         %{name: name, email: email, password: password}
         |> SignUpResolver.signup()
+        |> IO.inspect()
         |> case do
             {:ok, %User{} = user} ->
                 {:ok, %Score{} = score} = ScoreRepository.create_score(%{"user_id"=> user.id, "score" => 0})
@@ -48,7 +49,7 @@ defmodule IgrejotecaWeb.AuthController do
                 |> gen_token()
                 |> case do
                     nil -> Response.forbidden(conn)
-                    data -> render(conn, "login.json", auth: data)
+                    data -> render(conn, "signup.json", auth: data)
                 end
             _ -> Response.bad_request(conn)
         end

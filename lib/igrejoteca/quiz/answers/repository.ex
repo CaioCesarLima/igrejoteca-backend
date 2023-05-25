@@ -21,6 +21,14 @@ defmodule Igrejoteca.Quiz.Answers.Repository do
     Repo.all(Answer)
   end
 
+  def list_answers_by_question(question_id) do
+    query = from a in Answer,
+      where: a.question_id == ^question_id
+
+    Repo.all(query)
+  end
+
+
   @doc """
   Gets a single answer.
 
