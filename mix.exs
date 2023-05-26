@@ -50,6 +50,7 @@ defmodule Igrejoteca.MixProject do
       {:guardian, "~> 2.2"},
       {:httpoison, "~> 1.8"},
       {:phoenix_live_view, "~> 0.18"},
+      {:phoenix_view, "~> 2.0"},
       {:floki, ">= 0.30.0", only: :test},
     ]
   end
