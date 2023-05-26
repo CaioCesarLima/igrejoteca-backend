@@ -49,6 +49,7 @@ defmodule Igrejoteca.MixProject do
       {:argon2_elixir, "~> 3.0"},
       {:guardian, "~> 2.2"},
       {:httpoison, "~> 1.8"},
+      {:phoenix_live_view, "~> 0.18"},
       {:floki, ">= 0.30.0", only: :test},
     ]
   end
