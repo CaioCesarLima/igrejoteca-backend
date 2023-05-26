@@ -21,7 +21,7 @@ defmodule IgrejotecaWeb.TestimonyController do
       "owner_id" => current_user,
       "owner" => owner
     }
-    with {:ok, %Testimony{} = testimony} <- Repository.create_testimony(testimony_params) do
+    with {:ok, %Testimony{} = _testimony} <- Repository.create_testimony(testimony_params) do
       conn
       |> Response.created()
     end
