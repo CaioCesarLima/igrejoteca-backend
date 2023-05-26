@@ -1,4 +1,7 @@
 {
   "dependencies": {
+  },
+  "scripts": {
+    "deploy": "echo \"Deploying...\" && npm run build && echo \"Deployment complete.\""
   }
 }
