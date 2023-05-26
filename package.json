@@ -2,7 +2,7 @@
   "dependencies": {},
   "scripts": {
     "start": "node app.js",
-    "build": "node build.js",
+    "build": "",
     "deploy": "echo \"Deploying...\" && npm run build && echo \"Deployment complete.\""
   }
 }
