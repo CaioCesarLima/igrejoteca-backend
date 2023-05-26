@@ -2,7 +2,7 @@
   "dependencies": {},
   "scripts": {
     "start": "node app.js",
-    "build": "mix phx.digest",
+    "build": "",
     "deploy": "echo \"Deploying...\" && npm run build && echo \"Deployment complete.\""
   }
 }
