@@ -2,6 +2,9 @@
   "dependencies": {
   },
   "scripts": {
-    "deploy": "echo \"Deploying...\" && npm run build && echo \"Deployment complete.\""
+    "deploy": "echo \"Deploying...\" && rm -rf node_modules && npm install && npm run build && echo \"Deployment complete.\""
   }
 }
+
+
+
