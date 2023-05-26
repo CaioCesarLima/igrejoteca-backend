@@ -4,7 +4,6 @@ defmodule IgrejotecaWeb.AnswerController do
   alias Igrejoteca.Quiz.Answers.Repository
   alias Igrejoteca.Quiz.Answer
   alias IgrejotecaWeb.Utils.Response
-  alias Igrejoteca.Quiz.Questions
 
   action_fallback IgrejotecaWeb.FallbackController
 

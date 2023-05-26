@@ -25,7 +25,7 @@ defmodule IgrejotecaWeb.QuestionController do
 
 
 
-  def show(conn, %{"id" => id}) do
+  def show(conn, %{"id" => _id}) do
     question = Repository.get_random_question()
     answers = Answers.Repository.list_answers_by_question(question.id)
     question = Map.put(question, :answers, answers)

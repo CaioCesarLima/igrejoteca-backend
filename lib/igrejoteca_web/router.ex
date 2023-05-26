@@ -15,19 +15,6 @@ defmodule IgrejotecaWeb.Router do
     plug :put_secure_browser_headers
   end
 
-
-  scope "/", IgrejotecaWeb do
-    pipe_through :browser
-
-    # get "/", PageController, :index
-    live "/example", HomeLive, :index
-    live "/error", ErrorLive, :index
-    live "/loans", LoansLive, :index
-    live "/reserves", ReservesLive, :index
-    live "/books", BooksLive, :index
-    live "/quiz", QuizLive, :index
-
-  end
   # scope "/api", IgrejotecaWeb do
   #   pipe_through :api
 

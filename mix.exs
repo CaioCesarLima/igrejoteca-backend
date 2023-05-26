@@ -49,10 +49,7 @@ defmodule Igrejoteca.MixProject do
       {:argon2_elixir, "~> 3.0"},
       {:guardian, "~> 2.2"},
       {:httpoison, "~> 1.8"},
-      {:phoenix_live_view, "~> 0.18"},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:floki, ">= 0.30.0", only: :test},
-      {:tailwind, "~> 0.1", runtime: Mix.env() == :dev}
     ]
   end
 

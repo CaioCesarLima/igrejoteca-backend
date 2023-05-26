@@ -15,7 +15,7 @@ defmodule IgrejotecaWeb.PrayerController do
     render(conn, "index.json", prayers: listPrayers)
   end
 
-  def get_all_prayers(%{assigns: %{current_user: current_user}} = conn, _params) do
+  def get_all_prayers(%{assigns: %{current_user: _current_user}} = conn, _params) do
     listPrayers = PrayerRepository.list_prayers()
 
     render(conn, "index.json", prayers: listPrayers)

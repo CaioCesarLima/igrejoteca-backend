@@ -95,13 +95,4 @@ defmodule Igrejoteca.Quiz.Score.Repository do
     Repo.delete(score)
   end
 
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking answer changes.
-
-  ## Examples
-
-      iex> change_answer(answer)
-      %Ecto.Changeset{data: %Answer{}}
-
-  """
 end
