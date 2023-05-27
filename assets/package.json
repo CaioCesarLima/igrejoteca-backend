@@ -1,0 +1,11 @@
+{
+  "dependencies": {},
+  "scripts": {
+    "start": "node app.js",
+    "build": "",
+    "deploy": "echo \"Deploying...\" && cd .. && mix assets.deploy && rm -f _build/esbuild && echo \"Deployment complete.\""
+  }
+}
+
+
+
