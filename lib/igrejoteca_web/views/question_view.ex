@@ -11,9 +11,18 @@ defmodule IgrejotecaWeb.QuestionView do
   end
 
   def render("question.json", %{question: question}) do
-    %{
-      id: question.id,
-      text: question.text,
-    }
+    if Map.has_key?(question, :answers) do
+      %{
+        id: question.id,
+        text: question.text,
+        answers: render_many(question.answers, IgrejotecaWeb.AnswerView, "show.json")
+      }
+    else
+      %{
+        id: question.id,
+        text: question.text,
+      }
+    end
+
   end
 end
