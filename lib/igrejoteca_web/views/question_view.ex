@@ -11,11 +11,9 @@ defmodule IgrejotecaWeb.QuestionView do
   end
 
   def render("question.json", %{question: question}) do
-    IO.inspect(question.answers)
     %{
       id: question.id,
       text: question.text,
-      answers: render_many(question.answers, IgrejotecaWeb.AnswerView, "show.json")
     }
   end
 end
