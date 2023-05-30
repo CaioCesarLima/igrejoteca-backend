@@ -57,9 +57,10 @@ defmodule Igrejoteca.Books.Reserve.Repository do
   end
 
   def remove_book_to_user_and_book(book_id, user_id) do
-    from(Reserve)
-    |> where([r], r.book_id == ^book_id and r.user_id == ^user_id)
-    |> delete()
-    |> Repo.delete_all()
+    query = from r in Reserve,
+      where: r.book_id == ^book_id,
+      where: r.user_id == ^user_id
+    Repo.one(query)
+    |> Repo.delete()
   end
 end
