@@ -124,6 +124,7 @@ defmodule IgrejotecaWeb.BookController do
     case LoanRepository.add_loan_to_user(book_id, user_id) do
       {:ok, _struct} ->
         BookRepository.update_book(book, %{:status=> :loaned})
+        ReserveRepository.remove_book_to_user_and_book(book_id, user_id)
         Response.ok(conn)
       _ -> Response.bad_request(conn)
     end
