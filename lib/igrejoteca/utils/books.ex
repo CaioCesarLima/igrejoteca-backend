@@ -23,8 +23,6 @@ defmodule Igrejoteca.Utils.BooksApi do
 
   def format_book(body) do
 
-    body["volumeInfo"]["pageCount"] |> Integer.to_string()
-    |> IO.inspect()
 
     %{
       "title" => body["volumeInfo"]["title"],
