@@ -21,6 +21,10 @@ defmodule Igrejoteca.Accounts.Repository do
     Repo.all(User)
   end
 
+  def list_rank do
+    from(u in User, order_by: [desc: u.score_quiz], limit: 10) |> Repo.all()
+  end
+
   def get_user!(id), do: Repo.get!(User, id)
 
   def get_user_by_email(email), do: Repo.get_by(User, email: email)

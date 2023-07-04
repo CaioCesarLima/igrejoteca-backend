@@ -4,6 +4,7 @@ defmodule IgrejotecaWeb.QuestionController do
   alias Igrejoteca.Quiz.Questions.Repository
   alias Igrejoteca.Quiz.Question
   alias Igrejoteca.Quiz.Answers
+  alias Igrejoteca.Accounts
 
   action_fallback IgrejotecaWeb.FallbackController
 
@@ -47,5 +48,14 @@ defmodule IgrejotecaWeb.QuestionController do
     with {:ok, %Question{}} <- Repository.delete_question(question) do
       send_resp(conn, :no_content, "")
     end
+  end
+
+  def rank(conn, _params) do
+    users = Accounts.Repository.list_rank()
+
+    conn
+      |> put_status(:ok)
+      |> put_view(IgrejotecaWeb.UserView)
+      |> render("index.json", users: users)
   end
 end

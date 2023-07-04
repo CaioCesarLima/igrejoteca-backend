@@ -5,6 +5,7 @@ defmodule IgrejotecaWeb.NotificationController do
   alias Igrejoteca.Accounts.Notification
   alias IgrejotecaWeb.Utils.Response
   alias Igrejoteca.Utils.HttpPoison
+  alias Igrejoteca.Accounts
 
   action_fallback SAMWeb.FallbackController
 
@@ -66,5 +67,13 @@ defmodule IgrejotecaWeb.NotificationController do
     tokens  =  Repository.get_by_user!(user_id)
     Enum.each(tokens, fn x -> IO.inspect(x.token) end)
     Enum.each(tokens, fn x -> HttpPoison.push_notification(x.token, message, title) end)
+  end
+
+  def send_notification(conn,  %{"message" => message, "title" => title}) do
+
+    users  =  Accounts.Repository.list_users()
+    Enum.each(users, fn user -> trigger_notification_intern(%{"user_id" => user.id, "message" => message, "title" => title}) end)
+
+    Response.created(conn)
   end
 end
