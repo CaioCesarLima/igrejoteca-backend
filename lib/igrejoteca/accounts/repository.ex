@@ -22,7 +22,14 @@ defmodule Igrejoteca.Accounts.Repository do
   end
 
   def list_rank do
-    from(u in User, order_by: [desc: u.score_quiz], limit: 10) |> Repo.all()
+    from(u in Igrejoteca.Accounts.User,
+      join: s in Igrejoteca.Quiz.Score,
+      where: s.user_id == u.id,
+      order_by: [desc: s.score],
+      select: %{user: u, score: s.score},
+      limit: 10
+    )
+    |> Repo.all()
   end
 
   def get_user!(id), do: Repo.get!(User, id)

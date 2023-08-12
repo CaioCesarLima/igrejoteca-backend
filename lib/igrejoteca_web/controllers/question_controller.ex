@@ -56,6 +56,6 @@ defmodule IgrejotecaWeb.QuestionController do
     conn
       |> put_status(:ok)
       |> put_view(IgrejotecaWeb.UserView)
-      |> render("index.json", users: users)
+      |> render("index_rank.json", users: users)
   end
 end
