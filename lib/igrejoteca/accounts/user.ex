@@ -11,7 +11,7 @@ defmodule Igrejoteca.Accounts.User do
   @email_regex ~r/^[a-z0-9._+-]+@[a-z0-9.-]+\.[a-z]{2,63}$/
   # @username_regex ~r/^[a-z0-9._+A-Z-]+$/
   # @username_min_length 4
-  @min_password_lenght 8
+  @min_password_lenght 6
 
   # Fields
   @cast_fields [:name, :email, :password, :score_quiz]
