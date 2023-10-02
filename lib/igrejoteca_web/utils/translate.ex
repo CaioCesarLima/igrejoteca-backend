@@ -14,7 +14,7 @@ defmodule IgrejotecaWeb.Utils.Translate do
     IO.inspect(locale, label: "Locale")
     IO.inspect(error_message, label: "error_message")
     IO.inspect(@translations, label: "Translations")
-    IOinspect(Map.fetch!(@translations, locale), label: "map fetch")
+    IO.inspect(Map.fetch!(@translations, locale), label: "map fetch")
     case Map.fetch!(@translations, locale) do
       {_, translations} ->
         Map.get(translations, error_message, error_message)
