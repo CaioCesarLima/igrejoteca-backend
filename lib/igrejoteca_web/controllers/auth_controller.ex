@@ -51,7 +51,10 @@ defmodule IgrejotecaWeb.AuthController do
                     nil -> Response.forbidden(conn)
                     data -> render(conn, "signup.json", auth: data)
                 end
-            _ -> Response.bad_request(conn)
+            {:error, changeset}-> conn
+                    |> resp(400, changeset.erros)
+                    |> send_resp()
+                    |> halt()
         end
     end
 
