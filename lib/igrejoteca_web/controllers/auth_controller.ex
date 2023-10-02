@@ -7,6 +7,7 @@ defmodule IgrejotecaWeb.AuthController do
     alias IgrejotecaWeb.Utils.Response
     alias Igrejoteca.Quiz.Score.Repository, as: ScoreRepository
     alias Igrejoteca.Quiz.Score
+    alias IgrejotecaWeb.Utils.Translate
 
     action_fallback IgrejotecaWeb.FallbackController
 
@@ -52,7 +53,13 @@ defmodule IgrejotecaWeb.AuthController do
                     data -> render(conn, "signup.json", auth: data)
                 end
             {:error, changeset}->
-                    IO.inspect(changeset.errors, label: "Erros")
+                    translated_errors = Enum.map(changeset.errors, fn {field, messages} ->
+                        translated_messages = Enum.map(messages, fn message ->
+                        Translate.translate_error(message, "pt") # Substitua "pt" pelo idioma desejado
+                        end)
+                        {field, translated_messages}
+                    end)
+                    IO.inspect(translated_errors, label: "Erros")
                     conn
                     |> resp(400, "")
                     |> send_resp()
