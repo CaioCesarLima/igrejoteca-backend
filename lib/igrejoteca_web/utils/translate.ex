@@ -11,6 +11,9 @@ defmodule IgrejotecaWeb.Utils.Translate do
   }
 
   def translate_error(error_message, locale \\ "en") do
+    IO.inspect(locale, label: "Locale")
+    IO.inspect(error_message, label: "error_message")
+    IO.inspect(@translations, label: "Translations")
     case Map.fetch!(@translations, locale) do
       {_, translations} ->
         IO.inspect("Encontrou tradução")
