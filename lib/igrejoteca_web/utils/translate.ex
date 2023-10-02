@@ -17,7 +17,7 @@ defmodule IgrejotecaWeb.Utils.Translate do
       %{^error=> translations} ->
         IO.inspect(translations, label: "translations")
         translations
-      erro ->
+      _erro ->
         error_message
     end
   end
