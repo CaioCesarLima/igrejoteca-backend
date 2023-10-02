@@ -56,7 +56,7 @@ defmodule IgrejotecaWeb.AuthController do
                     error_list = Enum.map(changeset.errors, fn x ->
                         IO.inspect(x, label: "x")
                         {mensagem, _} = elem(x, 1)
-                        IO.inspect(message, label: "message")
+                        IO.inspect(mensagem, label: "message")
                         mensagem
                     end)
                     IO.inspect(error_list, label: "error list")
