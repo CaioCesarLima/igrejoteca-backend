@@ -57,6 +57,7 @@ defmodule IgrejotecaWeb.AuthController do
                         {mensagem, _} = elem(x, 1)
                         mensagem
                     end)
+                    IO.inspect(error_list, label: "error list")
                     translated_errors = Enum.map(error_list, fn message ->
                         Translate.translate_error(message, "pt")
                     end)

@@ -5,12 +5,15 @@ defmodule IgrejotecaWeb.Utils.Translate do
       # Outros mapeamentos de erro
     },
     "pt" => %{
-      "has invalid format" => "possui um formato inválido",
+      "email" => %{
+        "has invalid format" => "possui um formato inválido",
+      }
       # Outros mapeamentos de erro para português
     }
   }
 
   def translate_error(error_message, locale \\ "en") do
+    IO.inspect(error_message, label: "error message")
     case Map.fetch!(@translations, locale) do
       %{^error_message=> translations} ->
         translations
