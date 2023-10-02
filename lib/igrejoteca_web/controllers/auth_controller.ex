@@ -53,11 +53,14 @@ defmodule IgrejotecaWeb.AuthController do
                     data -> render(conn, "signup.json", auth: data)
                 end
             {:error, changeset}->
-                    translated_errors = Enum.map(changeset.errors, fn {field, messages} ->
-                        translated_messages = Enum.map(messages, fn message ->
-                        Translate.translate_error(message, "pt") # Substitua "pt" pelo idioma desejado
+                    error_list = Enum.reduce(changeset.errors, [], fn {field, messages}, acc ->
+                        Enum.reduce(messages, acc, fn message, acc ->
+                        [{field, message} | acc]
                         end)
-                        {field, translated_messages}
+                    end)
+
+                    translated_errors = Enum.map(error_list, fn {field, message} ->
+                        {field, Translate.translate_error(message, "pt")} # Substitua "pt" pelo idioma desejado
                     end)
                     IO.inspect(translated_errors, label: "Erros")
                     conn
