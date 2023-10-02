@@ -52,7 +52,7 @@ defmodule IgrejotecaWeb.AuthController do
                     data -> render(conn, "signup.json", auth: data)
                 end
             {:error, changeset}->
-                    IO.inpsect(changeset.errors)
+                    IO.inspect(changeset.errors)
                     conn
                     |> resp(400, "")
                     |> send_resp()
