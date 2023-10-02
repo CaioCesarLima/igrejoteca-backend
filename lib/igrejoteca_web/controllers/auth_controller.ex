@@ -54,10 +54,9 @@ defmodule IgrejotecaWeb.AuthController do
                 end
             {:error, changeset}->
                     error_list = Enum.map(changeset.errors, fn x ->
-                        IO.inspect(elem(x, 0), label: "x")
+                        item = elem(x, 0)
                         {mensagem, _} = elem(x, 1)
-                        IO.inspect(mensagem, label: "message")
-                        mensagem
+                        {item => mensagem}
                     end)
                     IO.inspect(error_list, label: "error list")
                     translated_errors = Enum.map(error_list, fn message ->
