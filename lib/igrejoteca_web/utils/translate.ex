@@ -18,8 +18,8 @@ defmodule IgrejotecaWeb.Utils.Translate do
       {_, translations} ->
         IO.inspect("Encontrou tradução")
         Map.get(translations, error_message, error_message)
-      _ ->
-        IO.inspect("Não Encontrou tradução")
+      erro ->
+        IO.inspect(erro, label: "Key error")
         error_message
     end
   end
