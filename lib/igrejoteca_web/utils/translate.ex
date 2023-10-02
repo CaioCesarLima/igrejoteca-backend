@@ -14,12 +14,11 @@ defmodule IgrejotecaWeb.Utils.Translate do
     IO.inspect(locale, label: "Locale")
     IO.inspect(error_message, label: "error_message")
     IO.inspect(@translations, label: "Translations")
+    IOinspect(Map.fetch!(@translations, locale), label: "map fetch")
     case Map.fetch!(@translations, locale) do
       {_, translations} ->
-        IO.inspect("Encontrou tradução")
         Map.get(translations, error_message, error_message)
       erro ->
-        IO.inspect(erro, label: "Key error")
         error_message
     end
   end
