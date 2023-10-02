@@ -55,7 +55,7 @@ defmodule IgrejotecaWeb.AuthController do
             {:error, changeset}->
                     Enum.each(changeset.errors, fn x ->
                         mensagem = elem(x, 1)
-                        IO.inspect(mensagem(x, 1), label: "Erro")
+                        IO.inspect(elem(mensagem, 1), label: "Erro")
                     end)
                     # error_list = Enum.reduce(changeset.errors, [], fn {field, messages}, acc ->
                     #     Enum.reduce(messages, acc, fn message, acc ->
