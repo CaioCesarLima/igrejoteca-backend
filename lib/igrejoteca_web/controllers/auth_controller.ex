@@ -61,11 +61,14 @@ defmodule IgrejotecaWeb.AuthController do
                     translated_errors = Enum.map(error_list, fn error ->
                         Translate.translate_error(error, "pt")
                     end)
-                    IO.inspect(translated_errors, label: "Erros")
+                    error = translated_errors
+                    |> List.first()
+                    |> Map.values
+
+                    IO.inspect(error, label: "error")
                     conn
-                    |> resp(400, "")
-                    |> send_resp()
-                    |> halt()
+                    |> put_status(400)
+                    |> render("auth_error_signup.json", error: List.first(error))
         end
     end
 

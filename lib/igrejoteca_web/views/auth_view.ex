@@ -33,4 +33,11 @@ defmodule IgrejotecaWeb.AuthView do
         }
       }
     end
+
+    def render("auth_error_signup.json", %{error: error}) do
+      IO.inspect(error)
+      %{
+        error: error,
+      }
+    end
   end

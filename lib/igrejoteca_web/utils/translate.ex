@@ -1,25 +1,29 @@
 defmodule IgrejotecaWeb.Utils.Translate do
   @translations %{
     "en" => %{
-      "has invalid format" => "has an invalid format",
-      # Outros mapeamentos de erro
+      "email" => %{
+        "has invalid format" => "Email has an invalid format",
+      }
     },
     "pt" => %{
-      "email" => %{
-        "has invalid format" => "possui um formato inválido",
+      :email => %{
+        "has invalid format" => "Email possui um formato inválido",
+        "has already been taken" => "Email já cadastrado, tente realizar login",
+      },
+      :password => %{
+        "has invalid format" => "A senha possui um formato inválido",
       }
-      # Outros mapeamentos de erro para português
     }
   }
 
   def translate_error(error, locale \\ "en") do
-    IO.inspect(Map.fetch!(@translations, locale), label: "map fetch")
-    case Map.fetch!(@translations, locale) do
-      %{^error=> translations} ->
-        IO.inspect(translations, label: "translations")
-        translations
-      _erro ->
-        error
+    pt_errors = Map.fetch!(@translations, locale)
+    key = List.first(Map.keys(error))
+    case Map.get(pt_errors, key) do
+      %{"" => translation} ->
+        translation
+      erro ->
+        erro
     end
   end
 end
