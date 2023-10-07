@@ -42,7 +42,7 @@ defmodule IgrejotecaWeb.UserController do
 
     score_params = %{
       "user_id" => current_user,
-      "score" => score.score + 50
+      "score" => score.score + 10
     }
 
 
