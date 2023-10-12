@@ -26,6 +26,7 @@ defmodule Igrejoteca.Books.BookRepository do
     query = from b in Book,
           where: like(fragment("lower(?)", b.title), fragment("lower(?)", ^like)),
           or_where: like(fragment("lower(?)", b.subtitle), fragment("lower(?)", ^like))
+    IO.inspect(query)
     Repo.all(query)
   end
 
