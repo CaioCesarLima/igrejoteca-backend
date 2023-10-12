@@ -73,6 +73,12 @@ defmodule IgrejotecaWeb.Router do
     post "/signup", AuthController, :signup
   end
 
+  scope "/auth", IgrejotecaWeb do
+    pipe_through :browser
+
+    get "/recovery-password", QuestionController, :html_test
+  end
+
   # Enables LiveDashboard only for development
   #
   # If you want to use the LiveDashboard in production, you should put

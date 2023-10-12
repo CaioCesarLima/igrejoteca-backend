@@ -71,4 +71,8 @@ defmodule IgrejotecaWeb.QuestionController do
       Response.created(conn)
     end
   end
+
+  def html_test(conn, _params) do
+    text(conn, "Hello, World!")
+  end
 end
