@@ -22,7 +22,9 @@ defmodule Igrejoteca.Books.BookRepository do
   end
 
   def search_book(search) do
+    IO.inspect(like)
     like = "%#{search}%"
+    IO.inspect(like)
     query = from b in Book,
           where: like(fragment("lower(?)", b.title), fragment("lower(?)", ^like)),
           or_where: like(fragment("lower(?)", b.subtitle), fragment("lower(?)", ^like))
