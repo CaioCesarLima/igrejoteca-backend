@@ -20,7 +20,7 @@ defmodule IgrejotecaWeb.AnswerController do
   def create(conn, %{"answers" => list_answers}) do
 
     Enum.each(list_answers, fn answer_params ->
-      Repository.create_answer(answer_params)end)
+      Repository.create_answer(answer_params) end)
 
     Response.ok(conn)
 

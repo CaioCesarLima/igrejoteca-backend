@@ -48,6 +48,7 @@ defmodule IgrejotecaWeb.Router do
     resources "/desires", DesireController, except: [:new, :edit]
 
     resources "/questions", QuestionController, except: [:new, :edit]
+    post "/question/answers", QuestionController, :question_answers
     put "/question/correct", UserController, :incremment_score
     resources "/answers", AnswerController, except: [:new, :edit]
     get "/answer/:question_id", AnswerController, :answers_question

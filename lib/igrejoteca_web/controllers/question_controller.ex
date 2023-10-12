@@ -5,6 +5,8 @@ defmodule IgrejotecaWeb.QuestionController do
   alias Igrejoteca.Quiz.Question
   alias Igrejoteca.Quiz.Answers
   alias Igrejoteca.Accounts
+  alias IgrejotecaWeb.Utils.Response
+  alias Igrejoteca.Quiz.Answers
 
   action_fallback IgrejotecaWeb.FallbackController
 
@@ -57,5 +59,16 @@ defmodule IgrejotecaWeb.QuestionController do
       |> put_status(:ok)
       |> put_view(IgrejotecaWeb.UserView)
       |> render("index_rank.json", users: users)
+  end
+
+  def question_answers(conn, %{"question" => question_params, "answers" => list_answers}) do
+
+    with {:ok, %Question{} = question} <- Repository.create_question(question_params) do
+      Enum.each(list_answers, fn answer_params ->
+        answer_params = Map.put(answer_params, "question_id", question.id)
+        Answers.Repository.create_answer(answer_params) end)
+
+      Response.created(conn)
+    end
   end
 end
