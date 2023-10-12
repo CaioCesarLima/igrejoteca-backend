@@ -47,6 +47,7 @@ defmodule IgrejotecaWeb.BookController do
 
   def search_books(conn, %{"search" => search}) do
     books = BookRepository.search_book(search)
+    IO.inspect(books)
     render(conn, "index.json", books: books)
   end
 
