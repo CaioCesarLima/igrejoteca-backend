@@ -22,7 +22,7 @@ defmodule Igrejoteca.Books.BookRepository do
   end
 
   def search_book(search) do
-    IO.inspect(like)
+    IO.inspect(search)
     like = "%#{search}%"
     IO.inspect(like)
     query = from b in Book,
