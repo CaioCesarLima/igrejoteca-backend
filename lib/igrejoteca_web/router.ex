@@ -63,6 +63,8 @@ defmodule IgrejotecaWeb.Router do
 
     resources "/notifications", NotificationController, except: [:new, :edit]
 
+    resources "/users", UserController, except: [:new, :edit]
+
     post "/send-notification", NotificationController, :send_notification
   end
 
