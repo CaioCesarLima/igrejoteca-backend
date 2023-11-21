@@ -24,7 +24,7 @@ defmodule IgrejotecaWeb.UserController do
 
   def show(conn, %{"id" => id}) do
     user = Repository.get_user!(id)
-    render(conn, "show.json", user: user)
+    render(conn, "show_rank.json", user: user)
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
