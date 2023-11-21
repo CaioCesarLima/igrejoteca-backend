@@ -32,7 +32,16 @@ defmodule Igrejoteca.Accounts.Repository do
     |> Repo.all()
   end
 
-  def get_user!(id), do: Repo.get!(User, id)
+  def get_user!(id) do
+    from(u in Igrejoteca.Accounts.User,
+      join: s in Igrejoteca.Quiz.Score,
+      where: s.user_id == u.id,
+      where: u.id == ^id,
+      order_by: [desc: s.score],
+      select: %{user: u, score: s.score}
+    )
+    |> Repo.one()
+  end
 
   def get_user_by_email(email), do: Repo.get_by(User, email: email)
 
