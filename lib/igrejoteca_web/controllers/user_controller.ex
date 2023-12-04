@@ -28,6 +28,7 @@ defmodule IgrejotecaWeb.UserController do
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
+    IO.inspect(user_params)
     user = Repository.get_user!(id)
 
     with {:ok, %User{} = user} <- Repository.update_user(user, user_params) do
