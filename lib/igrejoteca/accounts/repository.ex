@@ -79,6 +79,7 @@ defmodule Igrejoteca.Accounts.Repository do
 
   """
   def update_user(%User{} = user, attrs) do
+    IO.inspect(attrs)
     user
     |> User.changeset(attrs)
     |> Repo.update()
