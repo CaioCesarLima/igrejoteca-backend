@@ -30,7 +30,7 @@ defmodule IgrejotecaWeb.UserController do
   def update(conn, %{"id" => id, "user" => user_params}) do
     IO.inspect(user_params)
 
-    user = Repository.get_user!(id)
+    user = Repository.get_user_change_password!(id)
 
     with {:ok, %User{} = user} <- Repository.update_user(user, user_params) do
       render(conn, "show.json", user: user)

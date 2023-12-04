@@ -42,7 +42,7 @@ defmodule Igrejoteca.Accounts.Repository do
     )
     |> Repo.one()
   end
-
+  def get_user_change_password!(id), do: Repo.get(User, id)
   def get_user_by_email(email), do: Repo.get_by(User, email: email)
 
   def get_user_by_username(username), do: Repo.get_by(User, username: username)
