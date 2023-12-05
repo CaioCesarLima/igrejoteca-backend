@@ -11,6 +11,7 @@ defmodule IgrejotecaWeb.ReserveView do
   end
 
   def render("reserve.json", %{reserve: reserve}) do
+    IO.inspect(reserve)
     %{
       id: reserve.id,
       book: %{
