@@ -30,7 +30,8 @@ defmodule IgrejotecaWeb.UserView do
     %{
       id: user.user.id,
       name: user.user.name,
-      score: user.score
+      score: user.score,
+      email: user.user.email
     }
   end
 end
