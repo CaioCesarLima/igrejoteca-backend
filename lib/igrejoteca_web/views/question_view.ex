@@ -12,10 +12,11 @@ defmodule IgrejotecaWeb.QuestionView do
 
   def render("question.json", %{question: question}) do
     if Map.has_key?(question, :answers) do
+
       %{
         id: question.id,
         text: question.text,
-        answers: render_many(question.answers, IgrejotecaWeb.AnswerView, "show.json")
+        answers: render_many(Enum.shuffle(question.answers), IgrejotecaWeb.AnswerView, "show.json")
       }
     else
       %{
