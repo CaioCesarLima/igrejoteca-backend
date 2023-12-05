@@ -6,6 +6,7 @@ defmodule IgrejotecaWeb.PrayerController do
   alias Igrejoteca.PrayerRequest.PrayerUsers.Repository
   alias IgrejotecaWeb.Utils.Response
   alias IgrejotecaWeb.PrayerView
+  alias IgrejotecaWeb.NotificationController
 
   action_fallback IgrejotecaWeb.FallbackController
 
@@ -28,6 +29,7 @@ defmodule IgrejotecaWeb.PrayerController do
       "owner_id"=> current_user
     }
     with {:ok, %Prayer{} = prayer} <- PrayerRepository.create_prayer(prayer_params) do
+      NotificationController.trigger_notification_intern_all(%{"message" => "Novo pedido de oração compartilhado", "title" => "Oremos uns pelos outros"})
       prayerOne = PrayerRepository.get_prayer!(prayer.id)
       |> List.first()
       IO.inspect(prayerOne)

@@ -69,6 +69,12 @@ defmodule IgrejotecaWeb.NotificationController do
     Enum.each(tokens, fn x -> HttpPoison.push_notification(x.token, message, title) end)
   end
 
+  def trigger_notification_intern_all(%{"message" => message, "title" => title}) do
+    tokens  =  Repository.list_notifications()
+    Enum.each(tokens, fn x -> IO.inspect(x.token) end)
+    Enum.each(tokens, fn x -> HttpPoison.push_notification(x.token, message, title) end)
+  end
+
   def send_notification(conn,  %{"message" => message, "title" => title}) do
 
     users  =  Accounts.Repository.list_users()

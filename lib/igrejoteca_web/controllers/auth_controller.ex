@@ -12,6 +12,7 @@ defmodule IgrejotecaWeb.AuthController do
     action_fallback IgrejotecaWeb.FallbackController
 
     def login(conn, %{"identifier" => identifier, "password" => password}) do
+        IO.inspect(identifier)
         params = %{identifier: identifier, password: password}
 
         LoginResolver.login(params)
