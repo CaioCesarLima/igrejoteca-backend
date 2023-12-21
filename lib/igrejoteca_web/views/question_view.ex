@@ -16,12 +16,14 @@ defmodule IgrejotecaWeb.QuestionView do
       %{
         id: question.id,
         text: question.text,
+        source: question.source_question,
         answers: render_many(Enum.shuffle(question.answers), IgrejotecaWeb.AnswerView, "show.json")
       }
     else
       %{
         id: question.id,
         text: question.text,
+        source: question.source_question
       }
     end
 

@@ -2,8 +2,8 @@ import Config
 
 # Configure your database
 config :igrejoteca, Igrejoteca.Repo,
-  username: "postgres",
-  password: "igrejoteca2022",
+  username: "igrejoteca",
+  password: "igrejoteca1844",
   hostname: "localhost",
   database: "igrejoteca_dev",
   stacktrace: true,

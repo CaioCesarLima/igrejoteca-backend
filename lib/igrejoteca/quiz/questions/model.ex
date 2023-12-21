@@ -7,14 +7,14 @@ defmodule Igrejoteca.Quiz.Question do
 
   schema "questions" do
     field :text, :string
-
+    field :source_question, :string
     timestamps()
   end
 
   @doc false
   def changeset(question, attrs) do
     question
-    |> cast(attrs, [:text])
+    |> cast(attrs, [:text, :source_question])
     |> validate_required([:text])
   end
 end
